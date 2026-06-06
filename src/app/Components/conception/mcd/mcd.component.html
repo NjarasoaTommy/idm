@@ -4,6 +4,7 @@
 
     <app-node
       fNode
+      type="entity"
       fDragHandle
       fNodeOutput
       [fNodePosition]="{ x: 32, y: 32 }"
@@ -11,15 +12,15 @@
       fOutputConnectableSide="right"
     ></app-node>
 
-    <div
+    <app-node
       fNode
+      type="relation"
       fDragHandle
       fNodeInput
       [fNodePosition]="{ x: 240, y: 32 }"
       fInputId="input1"
       fInputConnectableSide="left"
     >
-      Node 2
-    </div>
+    </app-node>
   </f-canvas>
 </f-flow>

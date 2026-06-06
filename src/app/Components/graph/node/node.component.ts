@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input, HostBinding } from '@angular/core';
 
 @Component({
   selector: 'app-node',
@@ -8,6 +8,10 @@ import { Component } from '@angular/core';
   styleUrl: './node.component.scss'
 })
 export class NodeComponent {
+  @Input() type!: string;
+  @HostBinding('class') get hostClass() { // Class added to app-node directly.
+    return `node ${this.type}`;
+  }
   node_title = "Entité";
   node_attributes = [
     {
