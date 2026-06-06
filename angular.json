@@ -54,8 +54,8 @@
               }
             ],
             "styles": [
-              "src/styles.scss",
-              "node_modules/@foblex/flow/styles/default.scss"
+              "node_modules/@foblex/flow/styles/default.scss",
+              "src/styles.scss"
             ],
             "scripts": []
           },

@@ -1,0 +1,20 @@
+:host {
+  padding: 0 !important;
+}
+
+.node{
+  border: 2px solid black;
+  border-radius: 10px;
+
+  .node-title{
+    text-transform: uppercase;
+  }
+
+  .node-body{
+    border-top: 2px solid black;
+
+    p{
+      margin: 0;
+    }
+  }
+}
