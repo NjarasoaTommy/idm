@@ -10,7 +10,7 @@ import { NgFor } from '@angular/common';
 })
 export class FormComponent {
   node_form!: FormGroup;
-  @Input() closeModal!: () => {};
+  @Input() closeModal!: () => void;
 
   constructor(private form_builder: FormBuilder){
     this.node_form = this.form_builder.group({

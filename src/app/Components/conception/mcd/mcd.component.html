@@ -28,4 +28,4 @@
     </app-node>
   </f-canvas>
 </f-flow>
-<app-form></app-form>
+<app-form *ngIf="is_node_form_showed" [closeModal]="hide_node_form"></app-form>
