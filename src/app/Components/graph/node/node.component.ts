@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, HostBinding } from '@angular/core';
+import { FormComponent } from './form/form.component';
 
 @Component({
   selector: 'app-node',
-  imports: [CommonModule],
+  imports: [CommonModule, FormComponent],
   templateUrl: './node.component.html',
   styleUrl: './node.component.scss'
 })
