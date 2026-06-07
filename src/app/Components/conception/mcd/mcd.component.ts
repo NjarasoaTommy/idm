@@ -10,7 +10,7 @@ import { NgIf } from '@angular/common';
   styleUrl: './mcd.component.scss'
 })
 export class McdComponent {
-  is_node_form_showed: boolean = true;
+  is_node_form_showed: boolean = false;
 
   show_node_form = () => {
     this.is_node_form_showed = true;

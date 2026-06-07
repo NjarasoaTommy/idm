@@ -8,6 +8,7 @@ import { Component, Input, HostBinding } from '@angular/core';
   styleUrl: './node.component.scss'
 })
 export class NodeComponent {
+  @Input() showNodeForm!: () => void;
   @Input() type!: string;
   @HostBinding('class') get hostClass() { // Class added to app-node directly.
     return `node ${this.type}`;
@@ -26,5 +27,10 @@ export class NodeComponent {
       label : "attr2",
       type : 'boolean'
     }
-  ]
+  ];
+
+  onSetupNode(event: MouseEvent){
+    event.preventDefault();
+    this.showNodeForm();
+  }
 }

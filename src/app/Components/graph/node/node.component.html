@@ -1,4 +1,6 @@
-<div class="node-title">{{ node_title }}</div>
-<div class="node-body">
-  <p *ngFor="let attribute of node_attributes">{{ attribute.label }}</p>
+<div (contextmenu)="onSetupNode($event)">
+  <div class="node-title">{{ node_title }}</div>
+  <div class="node-body">
+    <p *ngFor="let attribute of node_attributes">{{ attribute.label }}</p>
+  </div>
 </div>
