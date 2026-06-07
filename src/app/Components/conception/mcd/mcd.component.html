@@ -13,7 +13,7 @@
       fDragHandle
       [showNodeForm]="show_node_form"
       fNodeOutput
-      [fOutputConnectableSide]="node.node_connection_side"
+      [fOutputConnectableSide]="node.node_output_connection_side"
       [fOutputId]="node.node_output_id"
     ></app-node>
 
@@ -29,13 +29,37 @@
       fDragHandle
       [showNodeForm]="show_node_form"
       fNodeInput
-      [fInputConnectableSide]="node.node_connection_side"
+      [fInputConnectableSide]="node.node_input_connection_side"
       [fInputId]="node.node_input_id"
+    ></app-node>
+
+    <app-node
+      *ngFor="let node of both_nodes"
+      key="index"
+      fNode
+      [node_type]="node.node_type"
+      [node_id]="node.node_id"
+      [node_title]="node.node_title"
+      [node_attributes]="node.node_attributes"
+      [fNodePosition]="node.node_position"
+      fDragHandle
+      [showNodeForm]="show_node_form"
+      fNodeInput
+      fNodeOutput
+      [fInputConnectableSide]="node.node_input_connection_side"
+      [fOutputConnectableSide]="node.node_output_connection_side"
+      [fInputId]="node.node_input_id"
+      [fOutputId]="node.node_output_id"
     ></app-node>
 
     <f-connection fOutputId="output1" fInputId="input1">
       <div fConnectionContent class="connection-label">
         1,N
+      </div>
+    </f-connection>
+    <f-connection fOutputId="output2" fInputId="input2">
+      <div fConnectionContent class="connection-label">
+        1,1
       </div>
     </f-connection>
 
