@@ -9,25 +9,13 @@ import { Component, Input, HostBinding } from '@angular/core';
 })
 export class NodeComponent {
   @Input() showNodeForm!: () => void;
-  @Input() type!: string;
+  @Input() node_type!: string;
   @HostBinding('class') get hostClass() { // Class added to app-node directly.
-    return `node ${this.type}`;
+    return `node ${this.node_type}`;
   }
-  node_title = "Entité";
-  node_attributes = [
-    {
-      label : "id",
-      type : 'number'
-    },
-    {
-      label : "attr1",
-      type : 'text'
-    },
-    {
-      label : "attr2",
-      type : 'boolean'
-    }
-  ];
+  @Input() node_id!: number;
+  @Input() node_title!: string;
+  @Input() node_attributes!: any;
 
   onSetupNode(event: MouseEvent){
     event.preventDefault();

@@ -1,33 +1,44 @@
 <f-flow fDraggable>
   <f-canvas>
+
+    <app-node
+      *ngFor="let node of output_nodes"
+      key="index"
+      fNode
+      [node_type]="node.node_type"
+      [node_id]="node.node_id"
+      [node_title]="node.node_title"
+      [node_attributes]="node.node_attributes"
+      [fNodePosition]="node.node_position"
+      fDragHandle
+      [showNodeForm]="show_node_form"
+      fNodeOutput
+      [fOutputConnectableSide]="node.node_connection_side"
+      [fOutputId]="node.node_output_id"
+    ></app-node>
+
+    <app-node
+      *ngFor="let node of input_nodes"
+      key="index"
+      fNode
+      [node_type]="node.node_type"
+      [node_id]="node.node_id"
+      [node_title]="node.node_title"
+      [node_attributes]="node.node_attributes"
+      [fNodePosition]="node.node_position"
+      fDragHandle
+      [showNodeForm]="show_node_form"
+      fNodeInput
+      [fInputConnectableSide]="node.node_connection_side"
+      [fInputId]="node.node_input_id"
+    ></app-node>
+
     <f-connection fOutputId="output1" fInputId="input1">
       <div fConnectionContent class="connection-label">
         1,N
       </div>
     </f-connection>
 
-    <app-node
-      fNode
-      type="entity"
-      fDragHandle
-      fNodeOutput
-      [fNodePosition]="{ x: 32, y: 32 }"
-      fOutputId="output1"
-      fOutputConnectableSide="right"
-      [showNodeForm]="show_node_form"
-    ></app-node>
-
-    <app-node
-      fNode
-      type="relation"
-      fDragHandle
-      fNodeInput
-      [fNodePosition]="{ x: 240, y: 32 }"
-      fInputId="input1"
-      fInputConnectableSide="left"
-      [showNodeForm]="show_node_form"
-    >
-    </app-node>
   </f-canvas>
 </f-flow>
 <app-form *ngIf="is_node_form_showed" [closeModal]="hide_node_form"></app-form>
