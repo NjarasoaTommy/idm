@@ -1,0 +1,22 @@
+.overlay{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  background-color: rgba(100, 100, 100, 0.8);
+
+  .modal{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -350px;
+    margin-left: -500px;
+    width: 1000px;
+    height: 700px;
+    z-index: 3;
+    background-color: #fff;
+    border-radius: 20px;
+  }
+}

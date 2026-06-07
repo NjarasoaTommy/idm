@@ -1,22 +1,30 @@
-<form [formGroup]="node_form" (ngSubmit)="saveNode()">
-  <label for="entity_name">Nom de l'entité :</label>
-  <input type="text" id="entity_name" formControlName="entity_name" />
-
-  <label for="attributes">Attributs de l'entité :</label>
-  <div formArrayName="attributes">
-    <div *ngFor="let attr of attributes.controls; let i = index"
-      [formGroupName]="i"
-    >
-      <input type="text" formControlName="name" />
-      <select formControlName="type">
-        <option value="string">Chaine de caractères</option>
-        <option value="number">Nombre</option>
-        <option value="boolean">Booléen</option>
-      </select>
-      <button type="button" (click)="removeAttributeFields(i)">Supprimer le champs</button>
+<div class="overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h1>Gestion des informations</h1>
+      <button (click)="closeModal()">X</button>
     </div>
-  </div>
+    <form [formGroup]="node_form" (ngSubmit)="saveNode()">
+      <label for="entity_name">Nom de l'entité :</label>
+      <input type="text" id="entity_name" formControlName="entity_name" />
 
-  <button type="button" (click)="addAttributeFields()">Ajouter un attribut</button>
-  <input type="submit" value="Enregistrer" />
-</form>
+      <label for="attributes">Attributs de l'entité :</label>
+      <div formArrayName="attributes">
+        <div *ngFor="let attr of attributes.controls; let i = index"
+          [formGroupName]="i"
+        >
+          <input type="text" formControlName="name" />
+          <select formControlName="type">
+            <option value="string">Chaine de caractères</option>
+            <option value="number">Nombre</option>
+            <option value="boolean">Booléen</option>
+          </select>
+          <button type="button" (click)="removeAttributeFields(i)">Supprimer le champs</button>
+        </div>
+      </div>
+
+      <button type="button" (click)="addAttributeFields()">Ajouter un attribut</button>
+      <input type="submit" value="Enregistrer" />
+    </form>
+  </div>
+</div>

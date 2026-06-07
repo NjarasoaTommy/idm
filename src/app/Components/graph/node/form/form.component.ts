@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { NgFor } from '@angular/common';
 
@@ -10,6 +10,7 @@ import { NgFor } from '@angular/common';
 })
 export class FormComponent {
   node_form!: FormGroup;
+  @Input() closeModal!: () => {};
 
   constructor(private form_builder: FormBuilder){
     this.node_form = this.form_builder.group({
