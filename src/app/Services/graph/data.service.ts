@@ -80,23 +80,10 @@ export class DataService {
     }
   ];
 
-  initial_connection_list = [
-    {
-      connection_id: 1,
-      connection_input_id: "input1",
-      connection_output_id: "output1",
-      connection_label: "1, N",
-    },
-    {
-      connection_id: 2,
-      connection_input_id: "input2",
-      connection_output_id: "output2",
-      connection_label: "1, 1",
-    }
-  ];
+  initial_connection_list = ["1, N", "1, 1"];
 
   private node_list_subject = new BehaviorSubject<any>([]);
-  private connection_list_subject = new BehaviorSubject<any>(this.initial_connection_list);
+  private connection_list_subject = new BehaviorSubject<any>([]);
 
   // Observable which should be subscribed when other components want to be aware of update
   node_list$ = this.node_list_subject.asObservable();
@@ -123,6 +110,14 @@ export class DataService {
         node.node_attributes
       );
     });
+
+    const all_initial_nodes = this.node_list_subject.getValue();
+    for(let i = 0; i < this.initial_connection_list.length; i++){
+      this.create_connection(
+        all_initial_nodes[i].node_output_id,
+        all_initial_nodes[i + 1].node_input_id,
+        this.initial_connection_list[i])
+    }
   }
 
   create_node_object(
@@ -149,6 +144,17 @@ export class DataService {
       node_output_id: node_relation_type[0] == "output" || node_relation_type[0] == "both" ? "output" + new_id : null
     });
     this.node_list_subject.next(all_nodes);
+  }
+
+  create_connection(output_id: string, input_id: string, label: string){
+    const all_connections = this.connection_list_subject.getValue();
+    all_connections.push({
+      connection_id: generateGuid(),
+      connection_input_id: input_id,
+      connection_output_id: output_id,
+      connection_label: label
+    });
+    this.connection_list_subject.next(all_connections);
   }
 
   saveOneNode( // Used to update one node by its id.
