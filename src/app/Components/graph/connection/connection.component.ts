@@ -16,7 +16,7 @@ export class ConnectionComponent implements OnInit{
   @Input() connection_id !: number;
   @Input() cardinality !: number;
 
-  cardinalities = ["1, 1", "1, N", "N, N"]; // List of cardinalities
+  cardinalities = ["0, 1", "1, 1", "0, N", "1, N"]; // List of cardinalities
 
   constructor(private form_builder: FormBuilder, private data_service: DataService){}
 
