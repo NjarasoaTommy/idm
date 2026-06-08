@@ -81,14 +81,16 @@ export class DataService {
 
   initial_connection_list = [
     {
+      connection_id: 1,
       connection_input_id: "input1",
       connection_output_id: "output1",
-      connection_label: "1,N",
+      connection_label: "1, N",
     },
     {
+      connection_id: 2,
       connection_input_id: "input2",
       connection_output_id: "output2",
-      connection_label: "1,1",
+      connection_label: "1, 1",
     }
   ];
 

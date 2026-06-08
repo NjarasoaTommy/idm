@@ -1,0 +1,9 @@
+<form [formGroup]="connection_form">
+  <input type="hidden" formControlName="connection_id" /><!-- To know the current connection -->
+  <select formControlName="cardinality"><!-- To be able to find one cardinality -->
+    <option 
+      *ngFor="let card of cardinalities"
+      [value]="card"
+    >{{ card }}</option>
+  </select>
+</form>

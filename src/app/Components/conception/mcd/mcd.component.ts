@@ -5,10 +5,11 @@ import { FormComponent } from '../../graph/node/form/form.component';
 import { NgFor, NgIf } from '@angular/common';
 import { DataService } from '../../../Services/graph/data.service';
 import { Subscription } from 'rxjs';
+import { ConnectionComponent } from '../../graph/connection/connection.component';
 
 @Component({
   selector: 'app-mcd',
-  imports: [FFlowModule, NodeComponent, FConnectionContent, FormComponent, NgIf, NgFor],
+  imports: [FFlowModule, NodeComponent, FConnectionContent, FormComponent, ConnectionComponent, NgIf, NgFor],
   templateUrl: './mcd.component.html',
   styleUrl: './mcd.component.scss'
 })

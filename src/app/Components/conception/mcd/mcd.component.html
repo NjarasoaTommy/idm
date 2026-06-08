@@ -56,10 +56,15 @@
     <f-connection
       *ngFor="let connection of connection_list"
       [fOutputId]="connection.connection_output_id"
-      [fInputId]="connection.connection_input_id">
-      <div fConnectionContent class="connection-label">
-        {{ connection.connection_label }}
-      </div>
+      [fInputId]="connection.connection_input_id"
+    >
+      <app-connection 
+        fConnectionContent
+        class="connection-label"
+        [connection_id]="connection.connection_id"
+        [cardinality]="connection.connection_label"
+      >
+      </app-connection>
     </f-connection>
 
   </f-canvas>
