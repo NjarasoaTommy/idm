@@ -3,7 +3,6 @@
 
     <app-node
       *ngFor="let node of output_nodes"
-      key="index"
       fNode
       [node_type]="node.node_type"
       [node_id]="node.node_id"
@@ -19,7 +18,6 @@
 
     <app-node
       *ngFor="let node of input_nodes"
-      key="index"
       fNode
       [node_type]="node.node_type"
       [node_id]="node.node_id"
@@ -35,7 +33,6 @@
 
     <app-node
       *ngFor="let node of both_nodes"
-      key="index"
       fNode
       [node_type]="node.node_type"
       [node_id]="node.node_id"
@@ -52,14 +49,12 @@
       [fOutputId]="node.node_output_id"
     ></app-node>
 
-    <f-connection fOutputId="output1" fInputId="input1">
+    <f-connection
+      *ngFor="let connection of connection_list"
+      [fOutputId]="connection.connection_output_id"
+      [fInputId]="connection.connection_input_id">
       <div fConnectionContent class="connection-label">
-        1,N
-      </div>
-    </f-connection>
-    <f-connection fOutputId="output2" fInputId="input2">
-      <div fConnectionContent class="connection-label">
-        1,1
+        {{ connection.connection_label }}
       </div>
     </f-connection>
 

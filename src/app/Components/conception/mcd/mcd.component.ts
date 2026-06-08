@@ -84,7 +84,20 @@ export class McdComponent {
       node_relation_type: "input",
       node_input_id: "input2"
     }
-  ]
+  ];
+
+  connection_list = [
+    {
+      connection_input_id: "input1",
+      connection_output_id: "output1",
+      connection_label: "1,N",
+    },
+    {
+      connection_input_id: "input2",
+      connection_output_id: "output2",
+      connection_label: "1,1",
+    }
+  ];
 
 
   show_node_form = () => {
