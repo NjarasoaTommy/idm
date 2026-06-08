@@ -95,24 +95,25 @@ export class DataService {
   private node_list_subject = new BehaviorSubject<any>(this.initial_node_list);
   private connection_list_subject = new BehaviorSubject<any>(this.initial_connection_list);
 
+  // Observable which should be subscribed when other components want to be aware of update
   node_list$ = this.node_list_subject.asObservable();
   connection_list$ = this.connection_list_subject.asObservable();
 
-  saveOneNode(
+  saveOneNode( // Use to update one node by its id.
     node_id: number,
     node_type: string,
     node_title: string,
     node_attributes: any
   ) {
-    const all_nodes = this.node_list_subject.getValue();
+    const all_nodes = this.node_list_subject.getValue(); // Get all nodes.
     all_nodes.forEach((current_node: any) => {
-      if(current_node.node_id == node_id){
+      if(current_node.node_id == node_id){ // Check the desired node by it's ID
         current_node.node_id = node_id;
         current_node.node_type = node_type;
         current_node.node_title = node_title;
         current_node.node_attributes = node_attributes;
       }
     });
-    this.node_list_subject.next(all_nodes);
+    this.node_list_subject.next(all_nodes); // Emit the new list of nodes
   }
 }
