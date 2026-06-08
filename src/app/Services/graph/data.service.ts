@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { generateGuid } from '@foblex/utils';
 
 @Injectable({
   providedIn: 'root'
@@ -94,12 +95,61 @@ export class DataService {
     }
   ];
 
-  private node_list_subject = new BehaviorSubject<any>(this.initial_node_list);
+  private node_list_subject = new BehaviorSubject<any>([]);
   private connection_list_subject = new BehaviorSubject<any>(this.initial_connection_list);
 
   // Observable which should be subscribed when other components want to be aware of update
   node_list$ = this.node_list_subject.asObservable();
   connection_list$ = this.connection_list_subject.asObservable();
+
+  constructor(){
+    this.initial_node_list.forEach((node: any) => {
+      const relation_info:any = [node.node_relation_type];
+      if(node.node_relation_type == "input"){
+        relation_info[1] = node.node_input_connection_side;
+      }
+      else if(node.node_relation_type == "output"){
+        relation_info[1] = node.node_output_connection_side;
+      }
+      else if(node.node_relation_type == "both"){
+        relation_info[1] = node.node_input_connection_side;
+        relation_info[2] = node.node_output_connection_side;
+      }
+      this.create_node_object(
+        node.node_type,
+        node.node_position,
+        relation_info,
+        node.node_title,
+        node.node_attributes
+      );
+    });
+  }
+
+  create_node_object(
+    node_type: string,
+    node_position: any,
+    node_relation_type: any,
+    node_title: string = "",
+    node_attributes: any = []
+  ){
+    const all_nodes = this.node_list_subject.getValue();
+    const new_id = generateGuid();
+    all_nodes.push({
+      node_id: new_id,
+      node_title: node_title,
+      node_type: node_type,
+      node_attributes: node_attributes,
+      node_position: node_position,
+      node_input_connection_side: node_relation_type[0] == "input" ? node_relation_type[1] :
+        node_relation_type[0] == "both" ? node_relation_type[1] : null,
+      node_output_connection_side: node_relation_type[0] == "output" ? node_relation_type[1] :
+        node_relation_type[0] == "both" ? node_relation_type[2] : null,
+      node_relation_type: node_relation_type[0],
+      node_input_id: node_relation_type[0] == "input" || node_relation_type[0] == "both" ? "input" + new_id : null,
+      node_output_id: node_relation_type[0] == "output" || node_relation_type[0] == "both" ? "output" + new_id : null
+    });
+    this.node_list_subject.next(all_nodes);
+  }
 
   saveOneNode( // Used to update one node by its id.
     node_id: number,
