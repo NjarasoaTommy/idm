@@ -60,4 +60,11 @@
 
   </f-canvas>
 </f-flow>
-<app-form *ngIf="is_node_form_showed" [closeModal]="hide_node_form"></app-form>
+<app-form 
+  *ngIf="is_node_form_showed" 
+  [closeModal]="hide_node_form"
+  [nodeId]="curent_node_id"
+  [nodeType]="curent_node_type"
+  [nodeTitle]="curent_node_title"
+  [nodeAttributes]="curent_node_attributes"
+></app-form>

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { NgFor } from '@angular/common';
 
@@ -8,14 +8,28 @@ import { NgFor } from '@angular/common';
   templateUrl: './form.component.html',
   styleUrl: './form.component.scss'
 })
-export class FormComponent {
+export class FormComponent implements OnInit{
   node_form!: FormGroup;
   @Input() closeModal!: () => void;
+  @Input() nodeId!: number;
+  @Input() nodeType!: string;
+  @Input() nodeTitle!: string;
+  @Input() nodeAttributes!: any;
 
-  constructor(private form_builder: FormBuilder){
+  constructor(private form_builder: FormBuilder){}
+
+  ngOnInit(){
+    const all_attributes:any = [];
+
+    this.nodeAttributes.forEach((attr: any) => {
+      all_attributes.push(this.createAttributeFields(attr.label, attr.type));
+    });
+
     this.node_form = this.form_builder.group({
-      entity_name: ["", Validators.required],
-      attributes: this.form_builder.array([])
+      node_id: [this.nodeId, Validators.required],
+      node_type: [this.nodeType, Validators.required],
+      entity_name: [this.nodeTitle, Validators.required],
+      attributes: this.form_builder.array(all_attributes)
     });
   }
 
@@ -23,11 +37,16 @@ export class FormComponent {
     return this.node_form.get('attributes') as FormArray;
   }
 
-  addAttributeFields(){
+  createAttributeFields(node_name: string = '', node_type: string = ''){
     const attribute_group = this.form_builder.group({
-      name: ['', Validators.required],
-      type: ['', Validators.required]
+      name: [node_name, Validators.required],
+      type: [node_type, Validators.required]
     });
+    return attribute_group;
+  }
+
+  addAttributeFields(){
+    const attribute_group = this.createAttributeFields();
     this.attributes.push(attribute_group);
   }
 

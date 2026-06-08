@@ -11,6 +11,10 @@ import { NgFor, NgIf } from '@angular/common';
 })
 export class McdComponent {
   is_node_form_showed: boolean = false;
+  curent_node_id: number = -1;
+  curent_node_type: string = "";
+  curent_node_title: string = "";
+  curent_node_attributes: any = [];
 
   node_list = [
     {
@@ -24,7 +28,7 @@ export class McdComponent {
         },
         {
           label : "attr1",
-          type : 'text'
+          type : 'string'
         },
         {
           label : "attr2",
@@ -47,7 +51,7 @@ export class McdComponent {
         },
         {
           label : "Rel_attr1",
-          type : 'text'
+          type : 'string'
         },
         {
           label : "Rel_attr2",
@@ -72,7 +76,7 @@ export class McdComponent {
         },
         {
           label : "attr21",
-          type : 'text'
+          type : 'string'
         },
         {
           label : "attr22",
@@ -100,7 +104,11 @@ export class McdComponent {
   ];
 
 
-  show_node_form = () => {
+  show_node_form = (node_id: number, node_type: string, node_title: string, node_attributes: any) => {
+    this.curent_node_id = node_id;
+    this.curent_node_type = node_type;
+    this.curent_node_title = node_title;
+    this.curent_node_attributes = node_attributes;
     this.is_node_form_showed = true;
   }
 

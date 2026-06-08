@@ -5,6 +5,9 @@
       <button (click)="closeModal()">X</button>
     </div>
     <form [formGroup]="node_form" (ngSubmit)="saveNode()">
+      <input type="hidden" formControlName="node_id" />
+      <input type="hidden" formControlName="node_type" />
+
       <label for="entity_name">Nom de l'entité :</label>
       <input type="text" id="entity_name" formControlName="entity_name" />
 
