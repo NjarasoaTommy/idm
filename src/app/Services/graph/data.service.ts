@@ -12,15 +12,15 @@ export class DataService {
       node_type: "entity",
       node_attributes: [
         {
-          label : "id1",
+          name : "id1",
           type : 'number'
         },
         {
-          label : "attr11",
+          name : "attr11",
           type : 'string'
         },
         {
-          label : "attr12",
+          name : "attr12",
           type : 'boolean'
         }
       ],
@@ -35,15 +35,15 @@ export class DataService {
       node_type: "relation",
       node_attributes: [
         {
-          label : "id",
+          name : "id",
           type : 'number'
         },
         {
-          label : "Rel_attr1",
+          name : "Rel_attr1",
           type : 'string'
         },
         {
-          label : "Rel_attr2",
+          name : "Rel_attr2",
           type : 'boolean'
         }
       ],
@@ -60,15 +60,15 @@ export class DataService {
       node_type: "entity",
       node_attributes: [
         {
-          label : "id2",
+          name : "id2",
           type : 'number'
         },
         {
-          label : "attr21",
+          name : "attr21",
           type : 'string'
         },
         {
-          label : "attr22",
+          name : "attr22",
           type : 'boolean'
         }
       ],
@@ -98,5 +98,21 @@ export class DataService {
   node_list$ = this.node_list_subject.asObservable();
   connection_list$ = this.connection_list_subject.asObservable();
 
-  constructor() { }
+  saveOneNode(
+    node_id: number,
+    node_type: string,
+    node_title: string,
+    node_attributes: any
+  ) {
+    const all_nodes = this.node_list_subject.getValue();
+    all_nodes.forEach((current_node: any) => {
+      if(current_node.node_id == node_id){
+        current_node.node_id = node_id;
+        current_node.node_type = node_type;
+        current_node.node_title = node_title;
+        current_node.node_attributes = node_attributes;
+      }
+    });
+    this.node_list_subject.next(all_nodes);
+  }
 }

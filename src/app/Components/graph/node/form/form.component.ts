@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { NgFor } from '@angular/common';
+import { DataService } from '../../../../Services/graph/data.service';
 
 @Component({
   selector: 'app-form',
@@ -16,13 +17,13 @@ export class FormComponent implements OnInit{
   @Input() nodeTitle!: string;
   @Input() nodeAttributes!: any;
 
-  constructor(private form_builder: FormBuilder){}
+  constructor(private form_builder: FormBuilder, private data_service: DataService){}
 
   ngOnInit(){
     const all_attributes:any = [];
 
     this.nodeAttributes.forEach((attr: any) => {
-      all_attributes.push(this.createAttributeFields(attr.label, attr.type));
+      all_attributes.push(this.createAttributeFields(attr.name, attr.type));
     });
 
     this.node_form = this.form_builder.group({
@@ -55,8 +56,13 @@ export class FormComponent implements OnInit{
   }
 
   saveNode(){
-    alert("OK");
-    console.log("OK");
-    console.log(this.node_form.value);
+    const node_data = this.node_form.value;
+    this.data_service.saveOneNode(
+      node_data.node_id,
+      node_data.node_type,
+      node_data.entity_name,
+      node_data.attributes,
+    );
+    this.closeModal();
   }
 }
