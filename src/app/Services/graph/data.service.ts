@@ -101,7 +101,7 @@ export class DataService {
   node_list$ = this.node_list_subject.asObservable();
   connection_list$ = this.connection_list_subject.asObservable();
 
-  saveOneNode( // Use to update one node by its id.
+  saveOneNode( // Used to update one node by its id.
     node_id: number,
     node_type: string,
     node_title: string,
@@ -117,5 +117,19 @@ export class DataService {
       }
     });
     this.node_list_subject.next(all_nodes); // Emit the new list of nodes
+  }
+
+  updateCardinality( // Used to update the cardinality of one connection by its id.
+    connection_id: number,
+    connection_cardinality: string
+  ) {
+    const all_connections = this.connection_list_subject.getValue(); // Get all connections.
+    all_connections.forEach((current_connection: any) => {
+      if(current_connection.connection_id == connection_id){ // Check the desired connection by it's ID
+        current_connection.connection_id = connection_id;
+        current_connection.connection_label = connection_cardinality;
+      }
+    });
+    this.connection_list_subject.next(all_connections); // Emit the new list of connections
   }
 }
