@@ -1,6 +1,7 @@
 <f-flow fDraggable>
   <f-canvas>
 
+    <!-- Get all nodes that have only an outgoing connection -->
     <app-node
       *ngFor="let node of output_nodes"
       fNode
@@ -16,6 +17,7 @@
       [fOutputId]="node.node_output_id"
     ></app-node>
 
+    <!-- Get all nodes which only have an incoming connection -->
     <app-node
       *ngFor="let node of input_nodes"
       fNode
@@ -31,6 +33,7 @@
       [fInputId]="node.node_input_id"
     ></app-node>
 
+    <!-- Get all nodes that have both connection side(in and out) -->
     <app-node
       *ngFor="let node of both_nodes"
       fNode
@@ -49,6 +52,7 @@
       [fOutputId]="node.node_output_id"
     ></app-node>
 
+    <!-- Just get all existing connexions -->
     <f-connection
       *ngFor="let connection of connection_list"
       [fOutputId]="connection.connection_output_id"
@@ -60,6 +64,8 @@
 
   </f-canvas>
 </f-flow>
+
+<!-- Form used to manage node(entity and relation) data -->
 <app-form 
   *ngIf="is_node_form_showed" 
   [closeModal]="hide_node_form"
