@@ -11,10 +11,10 @@
       <input type="hidden" formControlName="node_id" />
       <input type="hidden" formControlName="node_type" />
 
-      <label for="entity_name">Nom de l'entité :</label>
+      <label for="entity_name">Nom de {{ nodeType == "entity" ? "l'entité" : "la relation" }} :</label>
       <input type="text" id="entity_name" formControlName="entity_name" />
 
-      <label for="attributes">Attributs de l'entité :</label>
+      <label for="attributes">Attributs de {{ nodeType == "entity" ? "l'entité" : "la relation" }} :</label>
       <div formArrayName="attributes">
         <div *ngFor="let attr of attributes.controls; let i = index"
           [formGroupName]="i"
@@ -35,6 +35,8 @@
       <button type="button" (click)="addAttributeFields()">Ajouter un attribut</button>
       <input type="submit" value="Enregistrer" />
     </form>
+
+    <button (click)="deleteNode()">Supprimer {{ nodeType == "entity" ? "l'entité" : "la relation" }}</button>
 
   </div>
 </div>

@@ -74,4 +74,8 @@ export class FormComponent implements OnInit{
     );
     this.closeModal();
   }
+  deleteNode(){
+    this.data_service.deleteOneNode(this.nodeId);
+    this.closeModal();
+  }
 }
