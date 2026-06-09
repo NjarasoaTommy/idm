@@ -76,7 +76,7 @@ export class McdComponent implements OnDestroy {
     this.data_service.create_node_object(
       event.data?.type,
       event.rect, // The current position(after drop)
-      ["output", "left"]
+      event.data?.type == "output" ? ["both", "left", "right"] : ["output", "right"]
     );
   }
 }
