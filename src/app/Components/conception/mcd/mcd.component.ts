@@ -54,19 +54,6 @@ export class McdComponent implements OnDestroy {
     this.is_node_form_showed = false;
   }
 
-  //Methods used to get nodes depends on their type(output, input, both)
-  get output_nodes() {
-    return this.node_list.filter((n: any) => n.node_relation_type === 'output');
-  }
-
-  get input_nodes() {
-    return this.node_list.filter((n: any) => n.node_relation_type === 'input');
-  }
-
-  get both_nodes() {
-    return this.node_list.filter((n: any) => n.node_relation_type === 'both');
-  }
-
   ngOnDestroy(){
     // Unsubscribe after destroying component.
     this.node_list_subscription.unsubscribe();
@@ -77,7 +64,6 @@ export class McdComponent implements OnDestroy {
     this.data_service.create_node_object(
       event.data?.type,
       event.rect, // The current position(after drop)
-      event.data?.type == "relation" ? ["both", "left", "right"] : ["output", "right"]
     );
   }
 

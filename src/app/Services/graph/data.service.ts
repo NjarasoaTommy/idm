@@ -24,9 +24,7 @@ export class DataService {
           type : 'boolean'
         }
       ],
-      node_position: { x: 32, y: 32 },
-      node_output_connection_side: "right",
-      node_relation_type: "output",
+      node_position: { x: 32, y: 32 }
     },
     {
       node_title: "Relation",
@@ -45,10 +43,7 @@ export class DataService {
           type : 'boolean'
         }
       ],
-      node_position: { x: 240, y: 32 },
-      node_input_connection_side: "left",
-      node_output_connection_side: "right",
-      node_relation_type: "both",
+      node_position: { x: 240, y: 32 }
     },
     {
       node_title: "Entité 2",
@@ -67,9 +62,7 @@ export class DataService {
           type : 'boolean'
         }
       ],
-      node_position: { x: 570, y: 32 },
-      node_input_connection_side: "left",
-      node_relation_type: "input",
+      node_position: { x: 570, y: 32 }
     }
   ];
 
@@ -85,22 +78,9 @@ export class DataService {
   constructor(){
     // Create the initial nodes
     this.initial_node_list.forEach((node: any) => {
-      const relation_info:any = [node.node_relation_type];
-      // Form the fit the desired format
-      if(node.node_relation_type == "input"){ // ["input", input_side]
-        relation_info[1] = node.node_input_connection_side;
-      }
-      else if(node.node_relation_type == "output"){ // ["output", output_side]
-        relation_info[1] = node.node_output_connection_side;
-      }
-      else if(node.node_relation_type == "both"){ // ["both", input_side, output_side]
-        relation_info[1] = node.node_input_connection_side;
-        relation_info[2] = node.node_output_connection_side;
-      }
       this.create_node_object(
         node.node_type,
         node.node_position,
-        relation_info,
         node.node_title,
         node.node_attributes
       );
@@ -119,7 +99,6 @@ export class DataService {
   create_node_object( // Used to create a new node
     node_type: string,
     node_position: any,
-    node_relation_type: any, // ["input", input_side] or ["output", output_side] or ["both", input_side, output_side]
     node_title: string = "",
     node_attributes: any = []
   ){
@@ -131,16 +110,8 @@ export class DataService {
       node_type: node_type,
       node_attributes: node_attributes,
       node_position: node_position,
-
-      node_input_connection_side: node_relation_type[0] == "input" ? node_relation_type[1] : // input or both
-        node_relation_type[0] == "both" ? node_relation_type[1] : null,
-      node_output_connection_side: node_relation_type[0] == "output" ? node_relation_type[1] : // output or both
-        node_relation_type[0] == "both" ? node_relation_type[2] : null,
-
-      node_relation_type: node_relation_type[0],
-
-      node_input_id: node_relation_type[0] == "input" || node_relation_type[0] == "both" ? "input" + new_id : null,  // input or both
-      node_output_id: node_relation_type[0] == "output" || node_relation_type[0] == "both" ? "output" + new_id : null // output or both
+      node_input_id: "input" + new_id,
+      node_output_id: "output" + new_id
     };
     this.node_list_subject.next([...all_nodes, new_node]); // Update the list of nodes by adding the new one
   }

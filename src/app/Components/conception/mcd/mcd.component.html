@@ -6,45 +6,9 @@
   <f-canvas>
     <f-connection-for-create/><!-- For dynamic creation of connection -->
 
-    <!-- Get all nodes that have only an outgoing connection -->
+    <!-- Get all nodes (both connection side(in and out)) -->
     <app-node
-      *ngFor="let node of output_nodes"
-      fNode
-      fDragHandle
-      [node_type]="node.node_type"
-      [node_id]="node.node_id"
-      [node_title]="node.node_title"
-      [node_attributes]="node.node_attributes"
-      [fNodePosition]="node.node_position"
-      fDragHandle
-      [showNodeForm]="show_node_form"
-      fNodeOutput
-      fOutputMultiple
-      [fOutputConnectableSide]="node.node_output_connection_side"
-      [fOutputId]="node.node_output_id"
-    ></app-node>
-
-    <!-- Get all nodes which only have an incoming connection -->
-    <app-node
-      *ngFor="let node of input_nodes"
-      fNode
-      fDragHandle
-      [node_type]="node.node_type"
-      [node_id]="node.node_id"
-      [node_title]="node.node_title"
-      [node_attributes]="node.node_attributes"
-      [fNodePosition]="node.node_position"
-      fDragHandle
-      [showNodeForm]="show_node_form"
-      fNodeInput
-      fInputMultiple
-      [fInputConnectableSide]="node.node_input_connection_side"
-      [fInputId]="node.node_input_id"
-    ></app-node>
-
-    <!-- Get all nodes that have both connection side(in and out) -->
-    <app-node
-      *ngFor="let node of both_nodes"
+      *ngFor="let node of node_list"
       fNode
       fDragHandle
       [node_type]="node.node_type"
@@ -58,8 +22,8 @@
       fNodeOutput
       fInputMultiple
       fOutputMultiple
-      [fInputConnectableSide]="node.node_input_connection_side"
-      [fOutputConnectableSide]="node.node_output_connection_side"
+      fInputConnectableSide="left"
+      fOutputConnectableSide="right"
       [fInputId]="node.node_input_id"
       [fOutputId]="node.node_output_id"
     ></app-node>
