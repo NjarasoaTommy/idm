@@ -147,13 +147,13 @@ export class DataService {
 
   create_connection(output_id: string, input_id: string, label: string){ // Used to add new connection object
     const all_connections = this.connection_list_subject.getValue();
-    all_connections.push({
+    const new_connection = {
       connection_id: generateGuid(), // Generated identifier
       connection_input_id: input_id,
       connection_output_id: output_id,
       connection_label: label
-    });
-    this.connection_list_subject.next(all_connections); // Update the list of connections
+    };
+    this.connection_list_subject.next([...all_connections, new_connection]); // Update the list of connections by adding the new connection
   }
 
   saveOneNode( // Used to update one node by its id.

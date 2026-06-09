@@ -1,5 +1,5 @@
 import { Component, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { FFlowModule, FConnectionContent,  FExternalItem, FCreateNodeEvent } from '@foblex/flow';
+import { FFlowModule, FConnectionContent,  FExternalItem, FCreateNodeEvent, FCreateConnectionEvent } from '@foblex/flow';
 import { NodeComponent } from '../../graph/node/node.component';
 import { FormComponent } from '../../graph/node/form/form.component';
 import { NgFor, NgIf } from '@angular/common';
@@ -35,6 +35,7 @@ export class McdComponent implements OnDestroy {
 
     this.connection_list_subscription =  this.data_service.connection_list$.subscribe((all_connections: any) => {
       this.connection_list = all_connections;
+      this.cdr.markForCheck();
     });
   }
 
@@ -78,5 +79,12 @@ export class McdComponent implements OnDestroy {
       event.rect, // The current position(after drop)
       event.data?.type == "output" ? ["both", "left", "right"] : ["output", "right"]
     );
+  }
+
+  protected onCreateConnection(event: FCreateConnectionEvent): void {
+    if (!event.targetId) {
+      return;
+    }
+    this.data_service.create_connection(event.sourceId, event.targetId, "")
   }
 }

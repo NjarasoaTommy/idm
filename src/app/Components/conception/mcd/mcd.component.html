@@ -1,10 +1,16 @@
-<f-flow fDraggable (fCreateNode)="onCreateNode($event)">
+<f-flow
+  fDraggable
+  (fCreateNode)="onCreateNode($event)"
+  (fCreateConnection)="onCreateConnection($event)"
+>
   <f-canvas>
+    <f-connection-for-create/><!-- For dynamic creation of connection -->
 
     <!-- Get all nodes that have only an outgoing connection -->
     <app-node
       *ngFor="let node of output_nodes"
       fNode
+      fDragHandle
       [node_type]="node.node_type"
       [node_id]="node.node_id"
       [node_title]="node.node_title"
@@ -21,6 +27,7 @@
     <app-node
       *ngFor="let node of input_nodes"
       fNode
+      fDragHandle
       [node_type]="node.node_type"
       [node_id]="node.node_id"
       [node_title]="node.node_title"
@@ -37,6 +44,7 @@
     <app-node
       *ngFor="let node of both_nodes"
       fNode
+      fDragHandle
       [node_type]="node.node_type"
       [node_id]="node.node_id"
       [node_title]="node.node_title"
