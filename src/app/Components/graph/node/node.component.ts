@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, HostBinding } from '@angular/core';
+import { Component, Input, HostBinding, HostListener  } from '@angular/core';
 
 @Component({
   selector: 'app-node',
@@ -22,8 +22,11 @@ export class NodeComponent {
   @Input() node_title!: string;
   @Input() node_attributes!: any;
 
+  @HostListener('contextmenu', ['$event']) // Captured in host level(app-node)
+
   onSetupNode(event: MouseEvent){ // Called when the user want to update node.
     event.preventDefault();
+    event.stopPropagation();  // Foblex doesn't get the event
     this.showNodeForm(this.node_id, this.node_type,this.node_title, this.node_attributes);
   }
 }
