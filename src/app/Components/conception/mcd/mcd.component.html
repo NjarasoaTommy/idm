@@ -35,6 +35,7 @@
 
     <!-- Just get all existing connexions -->
     <f-connection
+      fType="segment"
       *ngFor="let connection of connection_list"
       [fOutputId]="connection.connection_output_id"
       [fInputId]="connection.connection_input_id"
