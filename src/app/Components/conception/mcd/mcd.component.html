@@ -35,6 +35,7 @@
 
     <!-- Just get all existing connexions -->
     <f-connection
+      (contextmenu)="deleteConnection($event, connection.connection_id)"
       fType="segment"
       *ngFor="let connection of connection_list"
       [fOutputId]="connection.connection_output_id"

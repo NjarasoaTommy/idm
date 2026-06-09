@@ -73,4 +73,8 @@ export class McdComponent implements OnDestroy {
     }
     this.data_service.create_connection(event.sourceId, event.targetId, "")
   }
+  deleteConnection(event: MouseEvent, connection_id: number){
+    event.preventDefault();
+    this.data_service.deleteOneConnectionByItsId(connection_id);
+  }
 }

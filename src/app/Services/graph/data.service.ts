@@ -179,4 +179,13 @@ export class DataService {
     });
     this.connection_list_subject.next(new_all_connections); // Emit the new list of connections
   }
+
+  deleteOneConnectionByItsId(connection_id: number) {
+    // Used to remove one connection by its id.
+    const all_connections = this.connection_list_subject.getValue(); // Get all connections.
+    const new_all_connections = all_connections.filter((current_connection: any) => {
+      return current_connection.connection_id != connection_id
+    });
+    this.connection_list_subject.next(new_all_connections); // Emit the new list of connections
+  }
 }
