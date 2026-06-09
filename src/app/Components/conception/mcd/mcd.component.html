@@ -19,6 +19,7 @@
       fDragHandle
       [showNodeForm]="show_node_form"
       fNodeOutput
+      fOutputMultiple
       [fOutputConnectableSide]="node.node_output_connection_side"
       [fOutputId]="node.node_output_id"
     ></app-node>
@@ -36,6 +37,7 @@
       fDragHandle
       [showNodeForm]="show_node_form"
       fNodeInput
+      fInputMultiple
       [fInputConnectableSide]="node.node_input_connection_side"
       [fInputId]="node.node_input_id"
     ></app-node>
@@ -54,6 +56,8 @@
       [showNodeForm]="show_node_form"
       fNodeInput
       fNodeOutput
+      fInputMultiple
+      fOutputMultiple
       [fInputConnectableSide]="node.node_input_connection_side"
       [fOutputConnectableSide]="node.node_output_connection_side"
       [fInputId]="node.node_input_id"
