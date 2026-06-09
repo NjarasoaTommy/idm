@@ -1,4 +1,4 @@
-<f-flow fDraggable>
+<f-flow fDraggable (fCreateNode)="onCreateNode($event)">
   <f-canvas>
 
     <!-- Get all nodes that have only an outgoing connection -->
@@ -58,7 +58,7 @@
       [fOutputId]="connection.connection_output_id"
       [fInputId]="connection.connection_input_id"
     >
-      <app-connection 
+      <app-connection
         fConnectionContent
         class="connection-label"
         [connection_id]="connection.connection_id"
@@ -71,11 +71,16 @@
 </f-flow>
 
 <!-- Form used to manage node(entity and relation) data -->
-<app-form 
-  *ngIf="is_node_form_showed" 
+<app-form
+  *ngIf="is_node_form_showed"
   [closeModal]="hide_node_form"
   [nodeId]="curent_node_id"
   [nodeType]="curent_node_type"
   [nodeTitle]="curent_node_title"
   [nodeAttributes]="curent_node_attributes"
 ></app-form>
+
+<div class="palette">
+  <div fExternalItem [fData]="{type: 'entity'}">Entité</div>
+  <div fExternalItem [fData]="{type: 'relation'}">Relation</div>
+</div>

@@ -1,5 +1,5 @@
-import { Component, OnDestroy } from '@angular/core';
-import { FFlowModule, FConnectionContent  } from '@foblex/flow';
+import { Component, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { FFlowModule, FConnectionContent,  FExternalItem, FCreateNodeEvent } from '@foblex/flow';
 import { NodeComponent } from '../../graph/node/node.component';
 import { FormComponent } from '../../graph/node/form/form.component';
 import { NgFor, NgIf } from '@angular/common';
@@ -9,14 +9,14 @@ import { ConnectionComponent } from '../../graph/connection/connection.component
 
 @Component({
   selector: 'app-mcd',
-  imports: [FFlowModule, NodeComponent, FConnectionContent, FormComponent, ConnectionComponent, NgIf, NgFor],
+  imports: [FFlowModule, FExternalItem, NodeComponent, FConnectionContent, FormComponent, ConnectionComponent, NgIf, NgFor],
   templateUrl: './mcd.component.html',
-  styleUrl: './mcd.component.scss'
+  styleUrl: './mcd.component.scss',
 })
 export class McdComponent implements OnDestroy {
   is_node_form_showed: boolean = false; // Control when to show or to hide the node form.
   // Used to initialize the node form
-  curent_node_id: number = -1; 
+  curent_node_id: number = -1;
   curent_node_type: string = "";
   curent_node_title: string = "";
   curent_node_attributes: any = [];
@@ -26,10 +26,11 @@ export class McdComponent implements OnDestroy {
   node_list_subscription!: Subscription; // Used to be aware of node update
   connection_list_subscription!: Subscription; // Used to be aware of connection update
 
-  constructor(private data_service: DataService){
+  constructor(private data_service: DataService, private cdr: ChangeDetectorRef){
     // Subscribe for dynamic data(node and connection)
     this.node_list_subscription =  this.data_service.node_list$.subscribe((all_nodes: any) => {
       this.node_list = all_nodes;
+      this.cdr.markForCheck(); // Force the detection of changes
     });
 
     this.connection_list_subscription =  this.data_service.connection_list$.subscribe((all_connections: any) => {
@@ -43,7 +44,7 @@ export class McdComponent implements OnDestroy {
     this.curent_node_type = node_type;
     this.curent_node_title = node_title;
     this.curent_node_attributes = node_attributes;
-    
+
     // Update all needed data and show the form.
     this.is_node_form_showed = true;
   }
@@ -69,5 +70,13 @@ export class McdComponent implements OnDestroy {
     // Unsubscribe after destroying component.
     this.node_list_subscription.unsubscribe();
     this.connection_list_subscription.unsubscribe();
+  }
+
+  protected onCreateNode(event: FCreateNodeEvent): void { // Used after the drag and drop for node(entity or relation)
+    this.data_service.create_node_object(
+      event.data?.type,
+      event.rect, // The current position(after drop)
+      ["output", "left"]
+    );
   }
 }

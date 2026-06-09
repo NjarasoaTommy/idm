@@ -125,7 +125,7 @@ export class DataService {
   ){
     const all_nodes = this.node_list_subject.getValue();
     const new_id = generateGuid();
-    all_nodes.push({
+    const new_node = {
       node_id: new_id,
       node_title: node_title,
       node_type: node_type,
@@ -138,11 +138,11 @@ export class DataService {
         node_relation_type[0] == "both" ? node_relation_type[2] : null,
 
       node_relation_type: node_relation_type[0],
-      
+
       node_input_id: node_relation_type[0] == "input" || node_relation_type[0] == "both" ? "input" + new_id : null,  // input or both
       node_output_id: node_relation_type[0] == "output" || node_relation_type[0] == "both" ? "output" + new_id : null // output or both
-    });
-    this.node_list_subject.next(all_nodes); // Update the list of nodes
+    };
+    this.node_list_subject.next([...all_nodes, new_node]); // Update the list of nodes by adding the new one
   }
 
   create_connection(output_id: string, input_id: string, label: string){ // Used to add new connection object
