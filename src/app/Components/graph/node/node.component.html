@@ -4,3 +4,6 @@
     <p *ngFor="let attribute of node_attributes">{{ attribute.name }}</p>
   </div>
 </div>
+
+<!-- To put the connector sides from the parent(All foblex instructions should be one template) -->
+<ng-content select="[node-connectors]"></ng-content>

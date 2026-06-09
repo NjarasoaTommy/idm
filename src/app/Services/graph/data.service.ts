@@ -90,8 +90,9 @@ export class DataService {
     const all_initial_nodes = this.node_list_subject.getValue();
     for(let i = 0; i < this.initial_connection_list.length; i++){
       this.create_connection( // Supposes that each node is connected to the nearest node.
-        all_initial_nodes[i].node_output_id,
-        all_initial_nodes[i + 1].node_input_id,
+        // TOP : 1  -  RIGHT : 2  -  BOTTOM : 3  -  LEFT : 4
+        all_initial_nodes[i].node_output_id + '2',
+        all_initial_nodes[i + 1].node_input_id + '4',
         this.initial_connection_list[i])
     }
   }

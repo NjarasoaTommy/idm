@@ -16,17 +16,22 @@
       [node_title]="node.node_title"
       [node_attributes]="node.node_attributes"
       [fNodePosition]="node.node_position"
-      fDragHandle
       [showNodeForm]="show_node_form"
-      fNodeInput
-      fNodeOutput
-      fInputMultiple
-      fOutputMultiple
-      fInputConnectableSide="left"
-      fOutputConnectableSide="right"
-      [fInputId]="node.node_input_id"
-      [fOutputId]="node.node_output_id"
-    ></app-node>
+    >
+      <ng-container node-connectors>
+        <!-- Add input connector side in the 4 sides -->
+        <div fNodeInput fInputMultiple [fInputId]="node.node_input_id + '1'" fInputConnectableSide="top" class="top"></div>
+        <div fNodeInput fInputMultiple [fInputId]="node.node_input_id + '2'" fInputConnectableSide="right" class="right"></div>
+        <div fNodeInput fInputMultiple [fInputId]="node.node_input_id + '3'" fInputConnectableSide="bottom" class="bottom"></div>
+        <div fNodeInput fInputMultiple [fInputId]="node.node_input_id + '4'" fInputConnectableSide="left" class="left"></div>
+
+        <!-- Add output connector side in the 4 sides -->
+        <div fNodeOutput fOutputMultiple [fOutputId]="node.node_output_id + '1'" fOutputConnectableSide="top" class="top"></div>
+        <div fNodeOutput fOutputMultiple [fOutputId]="node.node_output_id + '2'" fOutputConnectableSide="right" class="right"></div>
+        <div fNodeOutput fOutputMultiple [fOutputId]="node.node_output_id + '3'" fOutputConnectableSide="bottom" class="bottom"></div>
+        <div fNodeOutput fOutputMultiple [fOutputId]="node.node_output_id + '4'" fOutputConnectableSide="left" class="left"></div>
+      </ng-container>
+    </app-node>
 
     <!-- Just get all existing connexions -->
     <f-connection
