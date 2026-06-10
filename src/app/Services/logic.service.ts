@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DataService } from './graph/data.service';
+import { Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -7,22 +8,39 @@ import { DataService } from './graph/data.service';
 export class LogicService {
   all_nodes!: any;
   all_connections!: any;
+
+  all_nodes_subscription!: Subscription;
+  all_connections_subscription!: Subscription;
+
   all_entities!: any;
   all_relations: any;
 
   relation_entities: any = []; // Store the correspondance of relation and their entities
+  all_tables: any = []; // List of all tables(MLD)
+
   constructor(private data_service: DataService) {
-    this.all_nodes = this.data_service.getAllNodes();
-    this.all_connections = this.data_service.getAllConnections();
+    this.all_nodes_subscription = this.data_service.node_list$.subscribe((all_nodes: any) => {
+      this.all_nodes = all_nodes;
+    });
+    this.all_connections_subscription = this.data_service.connection_list$.subscribe((all_connections: any) => {
+      this.all_connections = all_connections;
+    });
+  }
+
+  updateAllEntitiesList(){
     this.all_entities = this.all_nodes.filter((node: any) => {
       return node.node_type == "entity";
     });
+  }
+  updateAllRelationsList(){
     this.all_relations = this.all_nodes.filter((node: any) => {
       return node.node_type == "relation";
     });
   }
 
   getAllTables(){
+    this.updateAllEntitiesList();
+    this.updateAllRelationsList();
     this.all_relations.forEach((relation: any) => {
       // Get the list of entities connected to the current relation.
       const all_connected_entities = this.getConnectedEntities(relation.node_id);
@@ -33,11 +51,11 @@ export class LogicService {
     console.log(this.relation_entities);
     console.log("---------------------------------------");
 
-    return {
-      "Connections" : this.all_connections,
-      "Relations" : this.all_relations,
-      "Entités" : this.all_entities
-    };
+    this.relation_entities.forEach((rel_ent: any) => {
+      this.fillListOfTable(rel_ent); // Create the table depends on the relation and the entities.
+    });
+
+    return this.all_tables;
   }
 
   getConnectedEntities(relation_id: string){ // ENTITY - RELATION
@@ -61,7 +79,7 @@ export class LogicService {
     });
     return connections;
   }
-  
+
   getEntitieByConnection(connection: any){ // ENTITE - CONNECTION
     // Returns all entities that are connected to the current connection
     const entitie = this.all_entities.filter((entity: any) => { // Filter only inside entity(Make sure that we will get only 1 entity)
@@ -69,5 +87,39 @@ export class LogicService {
         connection.connection_output_id.slice(6, -1) == entity.node_id; // 0:o - 1:u - 2:t - 3:p - 4:u - 5:t ... ... [1|2|3|4]
     });
     return entitie;
+  }
+
+  fillListOfTable(relation_entities_with_cardinality: any){
+    // Create a table depends on the list of entities that are connected to the relation and the related cardinality
+
+    const total_of_child = this.getTotalOfChild(relation_entities_with_cardinality[1]); // Total of entities which are classified as CHILD
+
+    // All are childs :           Child-Child or Child-Child-Child...(Child)
+    if(total_of_child == relation_entities_with_cardinality[1].length){
+      alert("CHILD : " + total_of_child + "TOTAL : " + relation_entities_with_cardinality[1].length + " -  All are childs");
+    }
+    // Only one is a child :            Child-Father or Child-Father-Father...(Father)
+    else if(total_of_child == 1){
+      alert("CHILD : " + total_of_child + "TOTAL : " + relation_entities_with_cardinality[1].length + " -  Only one is a child");
+    }
+    // All are fathers :            Father-Father or Father-Father-Father...(Father)
+    else if(total_of_child == 0){
+      alert("CHILD : " + total_of_child + "TOTAL : " + relation_entities_with_cardinality[1].length + " -  No child");
+    }
+    // Many childs(2 or more) but not all:                Father-Child-Child or Father-Child-Clild-Child...(Child)
+    else{
+      alert("CHILD : " + total_of_child + "TOTAL : " + relation_entities_with_cardinality[1].length + " -  2 or more childs but not all");
+    }
+  }
+
+  getTotalOfChild(entities_with_cardinality: any){
+    // Return the total number of entitie that has 0, 1 ro 1, 1 as cardinality to the current relation
+    let total = 0;
+    entities_with_cardinality.forEach((ent_card: any) => {
+      if(ent_card[0] == "0, 1" || ent_card[0] == "1, 1"){
+        total++;
+      }
+    });
+    return total;
   }
 }
