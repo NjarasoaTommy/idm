@@ -25,6 +25,12 @@
             <option value="number">Nombre</option>
             <option value="boolean">Booléen</option>
           </select>
+          <input 
+            *ngIf="nodeType=='entity'"
+            type="checkbox"
+            formControlName="is_identifier"
+            title="Identifiant ?"
+          /><!-- Allow the user to select the identifier -->
 
           <!-- Used to remove the dynamic field -->
           <button type="button" (click)="removeAttributeFields(i)">Supprimer le champs</button>
@@ -33,6 +39,7 @@
 
       <!-- Used to add new dynamic field -->
       <button type="button" (click)="addAttributeFields()">Ajouter un attribut</button>
+
       <input type="submit" value="Enregistrer" />
     </form>
 

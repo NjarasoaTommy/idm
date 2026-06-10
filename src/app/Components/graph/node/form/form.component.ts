@@ -1,11 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { DataService } from '../../../../Services/graph/data.service';
 
 @Component({
   selector: 'app-form',
-  imports: [ReactiveFormsModule, NgFor],
+  imports: [ReactiveFormsModule, NgFor, NgIf],
   templateUrl: './form.component.html',
   styleUrl: './form.component.scss'
 })
@@ -25,7 +25,7 @@ export class FormComponent implements OnInit{
     const all_attributes:any = []; // Used to store the list of grouped controls related to all attributes
 
     this.nodeAttributes.forEach((attr: any) => { // Create a field for each attribute
-      all_attributes.push(this.createAttributeFields(attr.name, attr.type));
+      all_attributes.push(this.createAttributeFields(attr.name, attr.type, attr.is_identifier));
     });
 
     // Initialize the form with correct data
@@ -43,11 +43,21 @@ export class FormComponent implements OnInit{
   }
 
   // Used to create one dynamic field for getting one attribute.
-  createAttributeFields(node_name: string = '', node_type: string = ''){
-    const attribute_group = this.form_builder.group({
-      name: [node_name, Validators.required],
-      type: [node_type, Validators.required]
-    });
+  createAttributeFields(attr_name: string = '', attr_type: string = '', is_identifier: boolean = false){
+    let attribute_group;
+    if(this.nodeType == 'entity'){
+      attribute_group = this.form_builder.group({
+        name: [attr_name, Validators.required],
+        type: [attr_type, Validators.required],
+        is_identifier: [is_identifier, Validators.required]
+      });
+    }
+    else{
+      attribute_group = this.form_builder.group({
+        name: [attr_name, Validators.required],
+        type: [attr_type, Validators.required]
+      });
+    }
     return attribute_group;
   }
 
