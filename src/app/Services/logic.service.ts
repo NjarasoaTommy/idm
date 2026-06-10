@@ -104,9 +104,14 @@ export class LogicService {
     // Only one is a child :            Child-Father or Child-Father-Father...(Father)
     else if(total_of_child == 1){
       const relation_attributes = this.getRelationAttributes(relation_entities_with_cardinality[0]);
+      let all_primary_keys = this.getAllPrimaryKeys(relation_entities_with_cardinality[1]);
       relation_entities_with_cardinality[1].forEach((entity_with_cardinality: any) => {
         if(entity_with_cardinality[0] == "0, 1" || entity_with_cardinality[0] == "1, 1"){ // Child
           this.addRelationAttributesToTable(entity_with_cardinality[1].node_title, relation_attributes);
+          all_primary_keys = all_primary_keys.filter((key: any) => { // Remove the primary key of the Child
+            return !entity_with_cardinality[1].node_attributes.some((attr: any) => attr.name == key.name);
+          });
+          this.addForeignKeysForTable(entity_with_cardinality[1].node_title, all_primary_keys); // Add the others primary keys as foreign keys
         }
       });
     }
@@ -165,5 +170,26 @@ export class LogicService {
     });
     current_table = current_table[0]; // Filter returns only one item(unique entity name)
     current_table[1] = [...current_table[1], ...relation_attributes];
+  }
+
+  getAllPrimaryKeys(list_of_entity_with_cardinality: any){
+    const primary_keys: any = [];
+    list_of_entity_with_cardinality.forEach((entity_with_cardinality: any) => {
+      entity_with_cardinality[1].node_attributes.forEach((attr: any) => {
+        if(attr.is_identifier){
+          primary_keys.push(attr);
+        }
+      });
+    });
+    return primary_keys;
+  }
+
+  addForeignKeysForTable(table_name: string, foreign_keys: any){
+    // foreign keys to the specified table
+    let current_table = this.all_tables.filter((table: any) => {
+      return table[0] == table_name;
+    });
+    current_table = current_table[0]; // Filter returns only one item(unique entity name)
+    current_table[2] = [...current_table[2], ...foreign_keys];
   }
 }
