@@ -180,7 +180,7 @@ export class DataService {
     // Used to remove all connections for one node by this node's id.
     const all_connections = this.connection_list_subject.getValue(); // Get all connections.
     const new_all_connections = all_connections.filter((current_connection: any) => {
-      return current_connection.connection_input_id.slice(5, -1) != node_id &&// 0:i - 1:n - 2:p - 3:u - 4:t ... ... [1|2|3|4]
+      return current_connection.connection_input_id.slice(5, -1) != node_id && // 0:i - 1:n - 2:p - 3:u - 4:t ... ... [1|2|3|4]
         current_connection.connection_output_id.slice(6, -1) != node_id; // 0:o - 1:u - 2:t - 3:p - 4:u - 5:t ... ... [1|2|3|4]
     });
     this.connection_list_subject.next(new_all_connections); // Emit the new list of connections
