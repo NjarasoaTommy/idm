@@ -96,13 +96,19 @@ export class LogicService {
     relation_entities_with_cardinality[1].forEach((entity_with_cardinality: any) => { // Create one table for each node.
       this.createOneTable(entity_with_cardinality[1].node_title, entity_with_cardinality[1].node_attributes);
     });
+
     // All are childs :           Child-Child or Child-Child-Child...(Child)
     if(total_of_child == relation_entities_with_cardinality[1].length){
       alert("CHILD : " + total_of_child + "TOTAL : " + relation_entities_with_cardinality[1].length + " -  All are childs");
     }
     // Only one is a child :            Child-Father or Child-Father-Father...(Father)
     else if(total_of_child == 1){
-      alert("CHILD : " + total_of_child + "TOTAL : " + relation_entities_with_cardinality[1].length + " -  Only one child");
+      const relation_attributes = this.getRelationAttributes(relation_entities_with_cardinality[0]);
+      relation_entities_with_cardinality[1].forEach((entity_with_cardinality: any) => {
+        if(entity_with_cardinality[0] == "0, 1" || entity_with_cardinality[0] == "1, 1"){ // Child
+          this.addRelationAttributesToTable(entity_with_cardinality[1].node_title, relation_attributes);
+        }
+      });
     }
     // All are fathers :            Father-Father or Father-Father-Father...(Father)
     else if(total_of_child == 0){
@@ -136,5 +142,28 @@ export class LogicService {
         [] // Foreign keys
       ]);
     }
+  }
+
+  getRelationAttributes(relation: any, add_primary_key: boolean = true){
+    // Get all attributes inside a relation.
+    if(add_primary_key){
+      const relation_attributes: any = [...relation.node_attributes];
+      relation_attributes.forEach((attr: any) => {
+        attr.is_primary = false;
+      });
+      return relation_attributes;
+    }
+    else{
+      return relation.node_attributes;
+    }
+  }
+
+  addRelationAttributesToTable(table_name: string, relation_attributes: any){
+    // Append all relation attributes to the specified table
+    let current_table = this.all_tables.filter((table: any) => {
+      return table[0] == table_name;
+    });
+    current_table = current_table[0]; // Filter returns only one item(unique entity name)
+    current_table[1] = [...current_table[1], ...relation_attributes];
   }
 }
