@@ -1,7 +1,10 @@
 <div (contextmenu)="onSetupNode($event)">
   <div class="node-title">{{ node_title }}</div><!-- Name section -->
   <div class="node-body"><!-- All related attributes -->
-    <p *ngFor="let attribute of node_attributes">{{ attribute.name }}</p>
+    <p 
+      *ngFor="let attribute of node_attributes"
+      [ngClass]="{identifier: node_type == 'entity' && attribute.is_identifier}"
+    >{{ attribute.name }}</p>
   </div>
 </div>
 

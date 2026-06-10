@@ -11,7 +11,13 @@
     border-top: 2px solid black;
 
     p{
-      margin: 0;
+      margin: 0 auto;
+      width: fit-content;
+
+      &.identifier{
+        border-bottom: 3px solid black;
+        margin-bottom: 5px;
+      }
     }
   }
 }

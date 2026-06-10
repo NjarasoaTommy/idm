@@ -13,15 +13,18 @@ export class DataService {
       node_attributes: [
         {
           name : "id1",
-          type : 'number'
+          type : 'number',
+          is_identifier: true,
         },
         {
           name : "attr11",
-          type : 'string'
+          type : 'string',
+          is_identifier: false,
         },
         {
           name : "attr12",
-          type : 'boolean'
+          type : 'boolean',
+          is_identifier: false,
         }
       ],
       node_position: { x: 32, y: 32 }
@@ -51,15 +54,18 @@ export class DataService {
       node_attributes: [
         {
           name : "id2",
-          type : 'number'
+          type : 'number',
+          is_identifier: true,
         },
         {
           name : "attr21",
-          type : 'string'
+          type : 'string',
+          is_identifier: false,
         },
         {
           name : "attr22",
-          type : 'boolean'
+          type : 'boolean',
+          is_identifier: false,
         }
       ],
       node_position: { x: 570, y: 32 }
