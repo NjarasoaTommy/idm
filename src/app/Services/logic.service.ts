@@ -47,10 +47,6 @@ export class LogicService {
       this.relation_entities.push([relation, all_connected_entities]) // [current_relation + all conneted_entities(+cardinality)]
     });
 
-    console.log("---------------------------------------");
-    console.log(this.relation_entities);
-    console.log("---------------------------------------");
-
     this.relation_entities.forEach((rel_ent: any) => {
       this.fillListOfTable(rel_ent); // Create the table depends on the relation and the entities.
     });

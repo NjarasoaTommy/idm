@@ -1,1 +1,12 @@
-<p>modele works!</p>
+<h1>Modèle logique de données</h1>
+<ul>
+  <li *ngFor="let table of all_tables">
+    {{ table[0] }} (
+      <span [ngClass]="{primary_key: table[1][0].is_identifier}">{{ table[1][0]['name'] }}</span>
+      <span *ngFor="let attr of table[1].slice(1)">
+        , <span [ngClass]="{primary_key: attr.is_identifier}">{{ attr['name'] }}</span>
+      </span>
+      <span *ngFor="let attr of table[2]">, {{ attr['name'] }}</span>
+    )
+  </li>
+</ul>
