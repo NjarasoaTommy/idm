@@ -194,4 +194,12 @@ export class DataService {
     });
     this.connection_list_subject.next(new_all_connections); // Emit the new list of connections
   }
+
+  // Get data directly (once without subscription)
+  getAllNodes(){
+    return this.node_list_subject.getValue();
+  }
+  getAllConnections(){
+    return this.connection_list_subject.getValue();
+  }
 }
