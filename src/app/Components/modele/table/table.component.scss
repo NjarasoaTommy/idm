@@ -1,0 +1,14 @@
+.table{
+  font-size: 20px;
+
+  span{
+    &.primary_key{
+      border-bottom: 3px solid black;
+      font-weight: 500;
+    }
+
+    &.foreign_key{
+      font-weight: bolder;
+    }
+  }
+}

@@ -1,0 +1,9 @@
+<div class="table">
+  {{ current_table[0] }} (
+    <span [ngClass]="{primary_key: current_table[1][0].is_identifier}">{{ current_table[1][0]['name'] }}</span>
+    <span *ngFor="let attr of current_table[1].slice(1)">
+      , <span [ngClass]="{primary_key: attr.is_identifier}">{{ attr['name'] }}</span>
+    </span>
+    <span class="foreign_key" *ngFor="let attr of current_table[2]">, {{ attr['name'] }}</span>
+  )
+</div>

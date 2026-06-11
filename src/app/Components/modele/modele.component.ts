@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { LogicService } from '../../Services/logic.service';
-import { NgClass, NgFor } from '@angular/common';
+import { NgFor } from '@angular/common';
+import { TableComponent } from './table/table.component';
 @Component({
   selector: 'app-modele',
-  imports: [NgFor, NgClass],
+  imports: [NgFor, TableComponent],
   templateUrl: './modele.component.html',
   styleUrl: './modele.component.scss'
 })
