@@ -72,7 +72,7 @@ export class DataService {
     }
   ];
 
-  initial_connection_list = ["1, N", "1, 1"];
+  initial_connection_list = ["1, N", "0, N"];
 
   private node_list_subject = new BehaviorSubject<any>([]);
   private connection_list_subject = new BehaviorSubject<any>([]);

@@ -117,7 +117,12 @@ export class LogicService {
     }
     // All are fathers :            Father-Father or Father-Father-Father...(Father)
     else if(total_of_child == 0){
-      alert("CHILD : " + total_of_child + "TOTAL : " + relation_entities_with_cardinality[1].length + " -  No child");
+      const relation_attributes = this.getRelationAttributes(relation_entities_with_cardinality[0]);
+      let all_primary_keys = this.getAllPrimaryKeys(relation_entities_with_cardinality[1]);
+      this.createOneTable(
+        relation_entities_with_cardinality[0].node_title, // Table name = Relation name
+        [...all_primary_keys, ...relation_attributes] // Table attributes = All primary keys of the connected entities + Relation attributes
+      );
     }
     // Many childs(2 or more) but not all:                Father-Child-Child or Father-Child-Clild-Child...(Child)
     else{
