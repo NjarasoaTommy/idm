@@ -1,2 +1,5 @@
 <h1>Modèle logique de données</h1>
 <app-table *ngFor="let table of all_tables" [current_table]="table"></app-table>
+
+<button (click)="exportSql()">Télécharger le code SQL</button>
+<button (click)="exportJava()">Télécharger le code Java</button>

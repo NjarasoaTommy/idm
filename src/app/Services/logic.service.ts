@@ -197,4 +197,28 @@ export class LogicService {
     current_table = current_table[0]; // Filter returns only one item(unique entity name)
     current_table[2] = [...current_table[2], ...foreign_keys];
   }
+
+
+  // File generation
+  private downloadFile(content: string, fileName: string): void {
+    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+    const url = window.URL.createObjectURL(blob);
+
+    const anchor = document.createElement('a');
+    anchor.href = url;
+    anchor.download = fileName;
+    anchor.click();
+
+    // Momery cleanup
+    window.URL.revokeObjectURL(url);
+    anchor.remove();
+  }
+
+  generateSql(sqlContent: string, fileName: string = 'export.sql'): void {
+    this.downloadFile(sqlContent, fileName);
+  }
+
+  generateJava(javaContent: string, fileName: string = 'MyClass.java'): void {
+    this.downloadFile(javaContent, fileName);
+  }
 }
