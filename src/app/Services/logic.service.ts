@@ -39,8 +39,12 @@ export class LogicService {
   }
 
   getAllTables(){
+    this.relation_entities = []; // Reset before getting the new list of tables.
+    this.all_tables = []; // Reset before getting the new list of tables.
+
     this.updateAllEntitiesList();
     this.updateAllRelationsList();
+
     this.all_relations.forEach((relation: any) => {
       // Get the list of entities connected to the current relation.
       const all_connected_entities = this.getConnectedEntities(relation.node_id);
